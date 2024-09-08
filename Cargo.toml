@@ -4,14 +4,15 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-askama = { git = "https://github.com/djc/askama.git", rev = "8142963", features = [
-    "config",
-    "with-rocket",
-    "mime",
-    "mime_guess",
-] }
-askama_rocket = { git = "https://github.com/djc/askama.git", rev = "8142963" }
 rocket = "0.5.0-rc.1"
+askama = { git = "https://github.com/djc/askama.git", rev = "8142963", features = [ "config", "with-rocket", "mime", "mime_guess" ] }
+askama_rocket = { git = "https://github.com/djc/askama.git", rev = "8142963" }
+#rocket_auth = { version = "0.4.0", features = ["sqlx-sqlite"]}
+serde = { version = "1.0", features = ["derive"] }
+chrono = { version = "0.4", features = ["serde"] }
+diesel = { version = "2.2.4", features = ["sqlite", "r2d2"]}
+rocket_sync_db_pools = { version = "0.1.0-rc.4", features = ["diesel_sqlite_pool"] }
+
 
 [build-dependencies]
-npm_rs = "0.2.1"
+npm_rs = "1.0.0"
