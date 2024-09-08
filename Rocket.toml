@@ -1,2 +1,4 @@
 [global.databases]
 sqlite = { url = "./database.sqlite" }
+pool_size = 2
+timeout = 5

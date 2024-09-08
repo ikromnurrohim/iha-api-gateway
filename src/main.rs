@@ -1,14 +1,11 @@
+use diesel::SqliteConnection;
 use rocket::{fs::FileServer, get, launch, routes};
+use rocket_sync_db_pools::database;
 
-mod templates;
-mod database;
-use database::{DbConn};
-
-
-
+extern crate iha_api_gateway;
 #[get("/")]
-fn index() -> templates::Index {
-    templates::Index {
+fn index() -> iha_api_gateway::templates::Index {
+    iha_api_gateway::templates::Index {
         title: "Index".to_string(),
     }
 }
@@ -16,7 +13,10 @@ fn index() -> templates::Index {
 #[launch]
 fn rocket() -> _ {
     rocket::build()
-        .mount("/", routes![index])
+        .mount("/", routes![
+            index,
+            iha_api_gateway::user::routes::get_users,
+        ])
         .mount("/public", FileServer::from("public"))
-        .attach(DbConn::fairing())
+        .attach(iha_api_gateway::database::sqlite::DbConn::fairing())
 }
